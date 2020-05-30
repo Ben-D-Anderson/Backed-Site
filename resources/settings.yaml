@@ -1,0 +1,29 @@
+#url to homepage of application
+websiteHost: ""
+
+#path to the folder of file storage
+fileStorageLocation: ""
+
+#mysql credentials
+mysql:
+  #username
+  username: ""
+  #password
+  password: ""
+  #host
+  host: ""
+  #database
+  database: ""
+  #port - default for mysql is 3306
+  port: 3306
+
+#mailing credentials
+mailing:
+  #email
+  email: ""
+  #password
+  password: ""
+  #host
+  host: ""
+  #port
+  port: 0
