@@ -6,62 +6,28 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fe8352d-631c-4ca5-8cde-2edb3fa20e09" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/WebServer_war.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/WebServer_war_exploded.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/libs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ReadMe.MD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebServer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/activation.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-validator-1.4.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/gson-2.2.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/mail.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/mysql-connector-java-5.1.39.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/snakeyaml-1.9.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/settings.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/api/LoginAPIFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/api/LoginAPIServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/api/LogoutAPIFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/api/LogoutAPIServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/api/response/LoginResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/api/response/Response.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/enums/Pages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/enums/Parameters.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/enums/Servlets.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/filters/account/LoginFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/filters/account/LogoutFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/filters/account/RegisterFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/filters/email/ConfirmEmailFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/mailing/Mailing.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/mailing/MailingQueue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/mailing/PremadeEmail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/mailing/emails/EmailConfirmationEmail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/mysql/MySQL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/mysql/MySQLQueue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/servlets/ErrorServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/servlets/IndexServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/servlets/account/LoginServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/servlets/account/LogoutServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/servlets/account/RegisterServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/servlets/email/ConfirmEmailServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/util/ClassPath.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/util/FileHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/util/QueueManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/util/Settings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backed/site/util/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/emails/EmailConfirmationHTML.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/error.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/login.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/logout.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/register.jsp" afterDir="false" />
+    <list default="true" id="2fe8352d-631c-4ca5-8cde-2edb3fa20e09" name="Default Changelist" comment="Initial Commit">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <list id="f59b69d8-679d-45be-b8d9-bc24b7e2cb04" name="Revert &quot;First commit&quot;" comment="Revert &quot;First commit&quot;&#10;&#10;This reverts commit 520d4226" />
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590871359331</updated>
-      <workItem from="1590871362211" duration="394000" />
+      <workItem from="1590871362211" duration="939000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1590871501060</created>
@@ -111,7 +77,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590871501060</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Renamed readme file">
+      <created>1590872132028</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1590872132029</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,7 +95,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -131,13 +116,14 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Initial Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+    <MESSAGE value="Renamed readme file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Renamed readme file" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="567" y="86" key="CommitChangelistDialog2" timestamp="1590871527795">
+    <state x="567" y="86" key="CommitChangelistDialog2" timestamp="1590872256529">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="567" y="86" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1590871527795" />
+    <state x="567" y="86" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1590872256529" />
     <state x="558" y="280" width="737" height="515" key="MultipleFileMergeDialog" timestamp="1590871523964">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -146,5 +132,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1590871729245" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1590872169807">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1590872169807" />
   </component>
 </project>
