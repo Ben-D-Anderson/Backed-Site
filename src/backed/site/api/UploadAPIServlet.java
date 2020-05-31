@@ -55,7 +55,7 @@ public class UploadAPIServlet extends HttpServlet {
             Iterator<FileItem> i = fileItems.iterator();
 
             while (i.hasNext()) {
-                FileItem fi = (FileItem)i.next();
+                FileItem fi = i.next();
                 if (!fi.isFormField()) {
                     String fileName = fi.getName();
                     while (fileName.contains(".."))
