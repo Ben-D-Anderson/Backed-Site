@@ -6,9 +6,6 @@
         <element id="directory" name="classes">
           <element id="module-output" name="WebServer" />
         </element>
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="libs" />
-        </element>
       </element>
       <element id="javaee-facet-resources" facet="WebServer/web/Web" />
     </root>

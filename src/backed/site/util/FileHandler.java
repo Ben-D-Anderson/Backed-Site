@@ -6,12 +6,7 @@ import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.*;
 import java.security.spec.KeySpec;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,11 +47,8 @@ public class FileHandler {
         fileOutputStream.close();
     }
 
-    public static File decryptToTMP(String username, String fileName) throws Exception {
+    public static void decryptToOutputStream(String username, String fileName, OutputStream outputStream) throws Exception {
         File input = getEncryptedFileOfUser(username, fileName);
-        String name = input.getName().substring(0, input.getName().lastIndexOf("."));
-        Path outputFile = Files.createTempFile(new File(System.getProperty("java.io.tmpdir")).toPath(), name, "");
-        File output = outputFile.toFile();
 
         String key = MySQL.getInstance().getEncryptionKeyFromUsername(username);
         if (key == null || key.isEmpty()) {
@@ -73,20 +65,14 @@ public class FileHandler {
 
         FileInputStream fileInputStream = new FileInputStream(input);
         CipherInputStream cipherInputStream = new CipherInputStream(fileInputStream, cipher);
-        FileOutputStream fileOutputStream = new FileOutputStream(output);
 
         byte[] buffer = new byte[1024];
         int length = 0;
         while ((length = cipherInputStream.read(buffer)) >= 0) {
-            fileOutputStream.write(buffer, 0, length);
+            outputStream.write(buffer, 0, length);
         }
         cipherInputStream.close();
         fileInputStream.close();
-        fileOutputStream.flush();
-        fileOutputStream.close();
-
-        output.deleteOnExit();
-        return output;
     }
 
     public static List<String> getAllFileNamesOfUser(String username) {
