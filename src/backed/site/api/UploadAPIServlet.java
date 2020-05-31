@@ -21,11 +21,11 @@ import java.util.List;
 public class UploadAPIServlet extends HttpServlet {
 
     private String filePath = System.getProperty("java.io.tmpdir");
-    private int maxFileSize = ((int) Settings.getInstance().getConfig().getMaxFileSizeInKB()) * 1000;
-    private int maxMemSize = ((int) Settings.getInstance().getConfig().getMaxFileSizeInMemory()) * 1000;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        int maxFileSize = ((int) Settings.getInstance().getConfig().getMaxFileSizeInKB()) * 1000;
+        int maxMemSize = ((int) Settings.getInstance().getConfig().getMaxFileSizeInMemory()) * 1000;
         String cookie = (String) req.getAttribute("auth_cookie");
         req.removeAttribute("auth_cookie");
         String username = MySQL.getInstance().getUsernameFromCookie(cookie);
