@@ -29,7 +29,9 @@ public class Settings {
             config = new SettingsConfiguration(new Gson().fromJson(json.get("mysql").toString(), type),
                     new Gson().fromJson(json.get("mailing").toString(), type),
                     json.get("websiteHost"),
-                    json.get("fileStorageLocation"));
+                    json.get("fileStorageLocation"),
+                    json.get("maxFileSizeInKB"),
+                    json.get("maxFileSizeInMemory"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,19 +44,29 @@ public class Settings {
 
     public class SettingsConfiguration {
 
-        private Object websiteHost, fileStorageLocation;
+        private Object websiteHost, fileStorageLocation, maxFileSizeInKB, maxFileSizeInMemory;
         private Map<String, Object> mysql;
         private Map<String, Object> mailing;
 
-        public SettingsConfiguration(Map<String, Object> mysql, Map<String, Object> mailing, Object websiteHost, Object fileStorageLocation) {
+        public SettingsConfiguration(Map<String, Object> mysql, Map<String, Object> mailing, Object websiteHost, Object fileStorageLocation, Object maxFileSizeInKB, Object maxFileSizeInMemory) {
             this.mysql = mysql;
             this.mailing = mailing;
             this.websiteHost = websiteHost;
             this.fileStorageLocation = fileStorageLocation;
+            this.maxFileSizeInKB = maxFileSizeInKB;
+            this.maxFileSizeInMemory = maxFileSizeInMemory;
         }
 
         public Object getWebsiteHost() {
             return websiteHost;
+        }
+
+        public Object getMaxFileSizeInKB() {
+            return maxFileSizeInKB;
+        }
+
+        public Object getMaxFileSizeInMemory() {
+            return maxFileSizeInMemory;
         }
 
         public Object getFileStorageLocation() {
@@ -63,10 +75,6 @@ public class Settings {
 
         public Map<String, Object> getMysql() {
             return mysql;
-        }
-
-        public void setMysql(Map<String, Object> mysql) {
-            this.mysql = mysql;
         }
 
         public Map<String, Object> getMailing() {

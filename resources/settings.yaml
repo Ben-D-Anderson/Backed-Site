@@ -1,6 +1,13 @@
 #url to homepage of application
 websiteHost: ""
 
+#the maximum size of file that can be uploaded (in kilobytes)
+# e.g. 1000 = 1MB
+maxFileSizeInKB: 1000
+#the maximum size of file that can be stored in memory (in kilobytes)
+# e.g. 500 = 500KB
+maxFileSizeInMemory: 500
+
 #path to the folder of file storage
 fileStorageLocation: ""
 
