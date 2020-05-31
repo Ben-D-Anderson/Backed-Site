@@ -31,7 +31,6 @@ public class MailingQueue {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Mailing Queue Thread Stopped");
         }, "Mailing Queue Thread");
         thread.start();
     }

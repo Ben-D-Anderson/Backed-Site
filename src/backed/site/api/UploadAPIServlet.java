@@ -6,6 +6,7 @@ import backed.site.util.FileHandler;
 import backed.site.util.Settings;
 import com.google.gson.Gson;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -20,12 +21,11 @@ import java.util.List;
 
 public class UploadAPIServlet extends HttpServlet {
 
-    private String filePath = System.getProperty("java.io.tmpdir");
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        int maxFileSize = ((int) Settings.getInstance().getConfig().getMaxFileSizeInKB()) * 1000;
-        int maxMemSize = ((int) Settings.getInstance().getConfig().getMaxFileSizeInMemory()) * 1000;
+        String filePath = System.getProperty("java.io.tmpdir");
+        int maxFileSize = Integer.parseInt(Settings.getInstance().getConfig().getMaxFileSizeInKB().toString()) * 1000;
+        int maxMemSize = Integer.parseInt(Settings.getInstance().getConfig().getMaxFileSizeInMemory().toString()) * 1000;
         String cookie = (String) req.getAttribute("auth_cookie");
         req.removeAttribute("auth_cookie");
         String username = MySQL.getInstance().getUsernameFromCookie(cookie);
@@ -40,22 +40,14 @@ public class UploadAPIServlet extends HttpServlet {
 
         factory.setSizeThreshold(maxMemSize);
 
-        String storageLoc = (String) Settings.getInstance().getConfig().getFileStorageLocation();
-        if (!storageLoc.endsWith(File.separator))
-            storageLoc += File.separator;
-        factory.setRepository(new File(storageLoc));
-
         ServletFileUpload upload = new ServletFileUpload(factory);
 
         upload.setSizeMax(maxFileSize);
 
         try {
-            List<FileItem> fileItems = upload.parseRequest(req);
+            List<FileItem> fileItems = upload.parseRequest(req); //this line causes error which isnt output
 
-            Iterator<FileItem> i = fileItems.iterator();
-
-            while (i.hasNext()) {
-                FileItem fi = i.next();
+            for (FileItem fi : fileItems) {
                 if (!fi.isFormField()) {
                     String fileName = fi.getName();
                     while (fileName.contains(".."))

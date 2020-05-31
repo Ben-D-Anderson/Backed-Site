@@ -93,7 +93,7 @@ public class FileHandler {
     }
 
     private static File getOutputDirOfUser(String username) {
-        String storageLoc = (String) Settings.getInstance().getConfig().getFileStorageLocation();
+        String storageLoc = Settings.getInstance().getConfig().getFileStorageLocation().toString();
         if (!storageLoc.endsWith(File.separator))
             storageLoc += File.separator;
         String storageID = MySQL.getInstance().getStorageIDFromUsername(username);

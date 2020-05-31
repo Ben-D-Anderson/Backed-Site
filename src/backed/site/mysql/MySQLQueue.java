@@ -31,7 +31,6 @@ public class MySQLQueue {
                     e.printStackTrace();
                 }
             }
-            System.out.println("MySQL Queue Thread Stopped");
         }, "MySQL Queue Thread");
         thread.start();
     }
