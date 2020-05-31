@@ -117,9 +117,9 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>LogoutAPIServlet</servlet-name>
-        <servlet-class>backed.site.api.LogoutAPIServlet</servlet-class>
-    </servlet>
+    <servlet-name>LogoutAPIServlet</servlet-name>
+    <servlet-class>backed.site.api.LogoutAPIServlet</servlet-class>
+</servlet>
     <servlet-mapping>
         <servlet-name>LogoutAPIServlet</servlet-name>
         <url-pattern>/api/logout</url-pattern>
@@ -131,6 +131,23 @@
     <filter-mapping>
         <filter-name>LogoutAPIFilter</filter-name>
         <url-pattern>/api/logout</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>UploadAPIServlet</servlet-name>
+        <servlet-class>backed.site.api.UploadAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadAPIServlet</servlet-name>
+        <url-pattern>/api/upload</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>UploadAPIFilter</filter-name>
+        <filter-class>backed.site.api.UploadAPIFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UploadAPIFilter</filter-name>
+        <url-pattern>/api/upload</url-pattern>
     </filter-mapping>
 
 </web-app>
