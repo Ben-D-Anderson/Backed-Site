@@ -31,7 +31,7 @@ public class UploadAPIServlet extends HttpServlet {
         String username = MySQL.getInstance().getUsernameFromCookie(cookie);
 
         if (!ServletFileUpload.isMultipartContent(req)) {
-            String jsonResponse = new Gson().toJson(new Response(true, "request must be in the format form/multipart"));
+            String jsonResponse = new Gson().toJson(new Response(true, "request must be in the format multipart/form-data"));
             res.getOutputStream().print(jsonResponse);
             return;
         }
