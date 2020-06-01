@@ -3,6 +3,7 @@ package backed.site.api;
 import backed.site.api.response.Response;
 import backed.site.mysql.MySQL;
 import backed.site.util.FileHandler;
+import backed.site.util.Settings;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -25,11 +26,13 @@ public class UploadAPIServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String cookie = (String) req.getAttribute("auth_cookie");
         String username = MySQL.getInstance().getUsernameFromCookie(cookie);
+        long maxFileSize = Integer.parseInt(Settings.getInstance().getConfig().getMaxFileSizeInKB().toString()) * 1000;
 
         JsonArray jsonArray = new JsonArray();
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
+        upload.setFileSizeMax(maxFileSize);
 
         List<FileItem> items = null;
         try {
@@ -47,7 +50,7 @@ public class UploadAPIServlet extends HttpServlet {
                 }
             }
         } catch (FileUploadException e) {
-            JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to parse request"));
+            JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to parse request (request may be too large)"));
             jsonArray.add(jsonElement);
         }
 
