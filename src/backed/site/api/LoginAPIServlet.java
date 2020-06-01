@@ -24,9 +24,11 @@ public class LoginAPIServlet extends HttpServlet {
             Cookie cookie = MySQL.getInstance().generateCookie();
             cookie.setMaxAge(3600);
             MySQLQueue.getInstance().addToQueue(() -> MySQL.getInstance().setCookie(user, cookie));
+            res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new LoginResponse(false, "login successful", cookie));
             res.getOutputStream().print(jsonResponse);
         } else {
+            res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new Response(true, "invalid credentials"));
             res.getOutputStream().print(jsonResponse);
         }

@@ -16,6 +16,7 @@ public class LogoutAPIServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         MySQL.getInstance().expireCookie((String) req.getAttribute("auth_cookie"));
         req.removeAttribute("auth_cookie");
+        res.setContentType("application/json");
         String jsonResponse = new Gson().toJson(new Response(false, "logout successful, cookie has been invalidated"));
         res.getOutputStream().print(jsonResponse);
     }

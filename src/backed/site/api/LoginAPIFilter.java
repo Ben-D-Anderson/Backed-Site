@@ -18,11 +18,13 @@ public class LoginAPIFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         if (!req.getMethod().equals("POST")) {
+            res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new Response(true, "post method required"));
             res.getOutputStream().print(jsonResponse);
             return;
         }
         if (!req.getHeader("User-Agent").equalsIgnoreCase("backed/api")) {
+            res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new Response(true, "invalid user-agent header"));
             res.getOutputStream().print(jsonResponse);
             return;
@@ -32,6 +34,7 @@ public class LoginAPIFilter implements Filter {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("auth_session")) {
                     if(MySQL.getInstance().registeredCookies.contains(cookie.getValue()) && MySQL.getInstance().isCookieValid(cookie.getValue())) {
+                        res.setContentType("application/json");
                         String jsonResponse = new Gson().toJson(new Response(true, "auth_session cookie already valid"));
                         res.getOutputStream().print(jsonResponse);
                         return;
@@ -42,6 +45,7 @@ public class LoginAPIFilter implements Filter {
         String user = req.getParameter(Parameters.Login.USERNAME.getParam());
         String pass = req.getParameter(Parameters.Login.PASSWORD.getParam());
         if (user == null | pass == null || user.isEmpty() || pass.isEmpty()) {
+            res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new Response(true, "username and password parameters are empty"));
             res.getOutputStream().print(jsonResponse);
             return;

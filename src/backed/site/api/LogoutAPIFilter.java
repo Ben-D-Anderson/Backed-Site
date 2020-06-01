@@ -17,11 +17,13 @@ public class LogoutAPIFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         if (!req.getMethod().equals("GET")) {
+            res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new Response(true, "get method required"));
             res.getOutputStream().print(jsonResponse);
             return;
         }
         if (!req.getHeader("User-Agent").equalsIgnoreCase("backed/api")) {
+            res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new Response(true, "invalid user-agent header"));
             res.getOutputStream().print(jsonResponse);
             return;
@@ -38,9 +40,9 @@ public class LogoutAPIFilter implements Filter {
                 }
             }
         }
+        res.setContentType("application/json");
         String jsonResponse = new Gson().toJson(new Response(true, "auth_session cookie not valid"));
         res.getOutputStream().print(jsonResponse);
-        return;
     }
 
 }
