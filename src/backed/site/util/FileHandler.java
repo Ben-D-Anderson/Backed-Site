@@ -86,21 +86,19 @@ public class FileHandler {
     private static File getOutputFile(String username, String inputName) {
         String outputName = inputName + ".bak";
         File outputDir = getOutputDirOfUser(username);
-        File outputFile = new File(outputDir.getAbsolutePath() + File.separator + outputName);
+        File outputFile = new File(outputDir.getPath() + File.separator + outputName);
         if (outputFile.exists()) outputFile.delete();
         return outputFile;
     }
 
     private static File getOutputDirOfUser(String username) {
-        String storageLoc = Settings.getInstance().getConfig().getFileStorageLocation().toString();
-        if (!storageLoc.endsWith(File.separator))
-            storageLoc += File.separator;
+        String storageLoc = Settings.getInstance().getConfig().getFileStorageLocation().toString().replace("\"", "");
         String storageID = MySQL.getInstance().getStorageIDFromUsername(username);
         if (storageID == null || storageID.isEmpty()) {
             storageID = MySQL.getInstance().generateStorageID();
             MySQL.getInstance().setStorageID(storageID, username);
         }
-        File outputDir = new File(storageLoc + storageID);
+        File outputDir = new File(storageLoc + File.separator + storageID);
         if (!outputDir.exists()) outputDir.mkdirs();
         return outputDir;
     }
