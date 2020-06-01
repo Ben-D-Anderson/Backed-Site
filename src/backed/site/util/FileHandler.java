@@ -13,8 +13,8 @@ import java.util.List;
 
 public class FileHandler {
 
-    public static void encryptAndSaveFile(String username, File input) throws Exception {
-        File output = getOutputFile(username, input);
+    public static void encryptAndSaveFile(String username, InputStream inputStream, String inputName) throws Exception {
+        File output = getOutputFile(username, inputName);
         output.createNewFile();
 
         String key = MySQL.getInstance().getEncryptionKeyFromUsername(username);
@@ -31,16 +31,15 @@ public class FileHandler {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
 
-        FileInputStream fileInputStream = new FileInputStream(input);
         FileOutputStream fileOutputStream = new FileOutputStream(output);
         CipherOutputStream cipherOutputStream = new CipherOutputStream(fileOutputStream, cipher);
 
         byte[] buffer = new byte[1024];
         int length = 0;
-        while ((length = fileInputStream.read(buffer)) >= 0) {
+        while ((length = inputStream.read(buffer)) >= 0) {
             cipherOutputStream.write(buffer, 0, length);
         }
-        fileInputStream.close();
+        inputStream.close();
         cipherOutputStream.flush();
         cipherOutputStream.close();
         fileOutputStream.flush();
@@ -84,8 +83,8 @@ public class FileHandler {
         return fileNames;
     }
 
-    private static File getOutputFile(String username, File input) {
-        String outputName = input.getName() + ".bak";
+    private static File getOutputFile(String username, String inputName) {
+        String outputName = inputName + ".bak";
         File outputDir = getOutputDirOfUser(username);
         File outputFile = new File(outputDir.getAbsolutePath() + File.separator + outputName);
         if (outputFile.exists()) outputFile.delete();
