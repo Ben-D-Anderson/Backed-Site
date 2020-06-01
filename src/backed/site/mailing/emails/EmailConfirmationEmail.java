@@ -24,7 +24,7 @@ public class EmailConfirmationEmail implements PremadeEmail {
             for (String line : lines) {
                 content.append(line
                         .replace("{CODE}", code)
-                        .replace("{LINK}", ((String) Settings.getInstance().getConfig().getWebsiteHost()) + Servlets.CONFIRM_EMAIL.getUrlPattern() + "?" + Parameters.ConfirmEmail.CODE.getParam() + "="));
+                        .replace("{LINK}", ((String) Settings.getInstance().getConfig().getWebsiteHost()) + Servlets.CONFIRM_EMAIL.getUrlPattern() + "?" + Parameters.ConfirmEmail.CODE.getParam() + "=").replace("\"", ""));
             }
         } catch (IOException e) {
             e.printStackTrace();
