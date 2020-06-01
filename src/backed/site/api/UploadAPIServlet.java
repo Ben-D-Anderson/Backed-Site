@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -27,23 +28,29 @@ public class UploadAPIServlet extends HttpServlet {
 
         JsonArray jsonArray = new JsonArray();
 
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+
+        List<FileItem> items = null;
         try {
-            DiskFileItemFactory factory = new DiskFileItemFactory();
-            ServletFileUpload upload = new ServletFileUpload(factory);
-
-            List<FileItem> items = upload.parseRequest(req);
-
+            items = upload.parseRequest(req);
             for (FileItem item : items) {
-                InputStream inputStream = item.getInputStream();
-                String name = item.getName().replace("..", "");
-                FileHandler.encryptAndSaveFile(username, inputStream, name);
-                JsonElement jsonElement = new Gson().toJsonTree(new Response(false, "file " + name + " successfully uploaded"));
-                jsonArray.add(jsonElement);
+                try {
+                    InputStream inputStream = item.getInputStream();
+                    String name = item.getName().replace("..", "");
+                    FileHandler.encryptAndSaveFile(username, inputStream, name);
+                    JsonElement jsonElement = new Gson().toJsonTree(new Response(false, "file " + name + " successfully uploaded"));
+                    jsonArray.add(jsonElement);
+                } catch(Exception e) {
+                    JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to upload file " + e.toString()));
+                    jsonArray.add(jsonElement);
+                }
             }
-        } catch(Exception e) {
-            JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to upload file"));
+        } catch (FileUploadException e) {
+            JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to parse request"));
             jsonArray.add(jsonElement);
         }
+
         res.setContentType("application/json");
         res.getOutputStream().print(jsonArray.toString());
     }
