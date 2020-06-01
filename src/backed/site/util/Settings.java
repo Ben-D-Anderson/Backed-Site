@@ -30,8 +30,7 @@ public class Settings {
                     new Gson().fromJson(json.get("mailing").toString(), type),
                     json.get("websiteHost"),
                     json.get("fileStorageLocation"),
-                    json.get("maxFileSizeInKB"),
-                    json.get("maxFileSizeInMemory"));
+                    json.get("maxFileSizeInKB"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,17 +43,16 @@ public class Settings {
 
     public class SettingsConfiguration {
 
-        private Object websiteHost, fileStorageLocation, maxFileSizeInKB, maxFileSizeInMemory;
+        private Object websiteHost, fileStorageLocation, maxFileSizeInKB;
         private Map<String, Object> mysql;
         private Map<String, Object> mailing;
 
-        public SettingsConfiguration(Map<String, Object> mysql, Map<String, Object> mailing, Object websiteHost, Object fileStorageLocation, Object maxFileSizeInKB, Object maxFileSizeInMemory) {
+        public SettingsConfiguration(Map<String, Object> mysql, Map<String, Object> mailing, Object websiteHost, Object fileStorageLocation, Object maxFileSizeInKB) {
             this.mysql = mysql;
             this.mailing = mailing;
             this.websiteHost = websiteHost;
             this.fileStorageLocation = fileStorageLocation;
             this.maxFileSizeInKB = maxFileSizeInKB;
-            this.maxFileSizeInMemory = maxFileSizeInMemory;
         }
 
         public Object getWebsiteHost() {
@@ -63,10 +61,6 @@ public class Settings {
 
         public Object getMaxFileSizeInKB() {
             return maxFileSizeInKB;
-        }
-
-        public Object getMaxFileSizeInMemory() {
-            return maxFileSizeInMemory;
         }
 
         public Object getFileStorageLocation() {
