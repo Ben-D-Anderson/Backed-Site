@@ -7,7 +7,10 @@ public enum Servlets {
     LOGOUT("/logout"),
     REGISTER("/register"),
     CONFIRM_EMAIL("/confirm_email"),
-    ERROR("/error");
+    ERROR("/error"),
+    API_LOGIN("/api/login"),
+    API_LOGOUT("/api/logout"),
+    API_UPLOAD("/api/upload");
 
     private String urlPattern;
 
