@@ -51,6 +51,21 @@ public class Parameters {
         }
     }
 
+    public enum DownloadAPI implements baseParamEnum {
+        FILENAME("filename");
+
+        private String param;
+
+        DownloadAPI(String param) {
+            this.param = param;
+        }
+
+        @Override
+        public String getParam() {
+            return param;
+        }
+    }
+
     private interface baseParamEnum {
         String getParam();
     }
