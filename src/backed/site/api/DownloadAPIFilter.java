@@ -1,6 +1,7 @@
 package backed.site.api;
 
 import backed.site.api.response.Response;
+import backed.site.enums.Parameters;
 import backed.site.mysql.MySQL;
 import com.google.gson.Gson;
 
@@ -33,6 +34,13 @@ public class DownloadAPIFilter implements Filter {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("auth_session")) {
                     if(MySQL.getInstance().registeredCookies.contains(cookie.getValue()) && MySQL.getInstance().isCookieValid(cookie.getValue())) {
+                        String filename = req.getParameter(Parameters.DownloadAPI.FILENAME.getParam());
+                        if (filename == null || filename.isEmpty()) {
+                            res.setContentType("application/json");
+                            String jsonResponse = new Gson().toJson(new Response(true, Parameters.DownloadAPI.FILENAME.getParam() + " parameter is empty"));
+                            res.getOutputStream().print(jsonResponse);
+                            return;
+                        }
                         req.setAttribute("auth_cookie", cookie.getValue());
                         chain.doFilter(req, res);
                         return;
