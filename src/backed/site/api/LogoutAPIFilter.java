@@ -18,7 +18,7 @@ public class LogoutAPIFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         if (!req.getMethod().equals("GET")) {
             res.setContentType("application/json");
-            String jsonResponse = new Gson().toJson(new Response(true, "get method required"));
+            String jsonResponse = new Gson().toJson(new Response(true, "http get method required"));
             res.getOutputStream().print(jsonResponse);
             return;
         }

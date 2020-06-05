@@ -19,7 +19,7 @@ public class LoginAPIFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         if (!req.getMethod().equals("POST")) {
             res.setContentType("application/json");
-            String jsonResponse = new Gson().toJson(new Response(true, "post method required"));
+            String jsonResponse = new Gson().toJson(new Response(true, "http post method required"));
             res.getOutputStream().print(jsonResponse);
             return;
         }
