@@ -17,7 +17,7 @@ import java.security.GeneralSecurityException;
 
 public class DownloadAPIServlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         String cookie = (String) req.getAttribute("auth_cookie");
         String username = MySQL.getInstance().getUsernameFromCookie(cookie);

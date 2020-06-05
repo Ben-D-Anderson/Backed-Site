@@ -17,9 +17,9 @@ public class DownloadAPIFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        if (!req.getMethod().equals("GET")) {
+        if (!req.getMethod().equals("POST")) {
             res.setContentType("application/json");
-            String jsonResponse = new Gson().toJson(new Response(true, "http get method required"));
+            String jsonResponse = new Gson().toJson(new Response(true, "http post method required"));
             res.getOutputStream().print(jsonResponse);
             return;
         }
@@ -35,8 +35,11 @@ public class DownloadAPIFilter implements Filter {
                 if (cookie.getName().equals("auth_session")) {
                     if(MySQL.getInstance().registeredCookies.contains(cookie.getValue()) && MySQL.getInstance().isCookieValid(cookie.getValue())) {
                         String filename = req.getParameter(Parameters.DownloadAPI.FILENAME.getParam());
-                        filename = filename.replace("..", "");
-                        if (filename.isEmpty()) {
+                        boolean empty = filename == null;
+                        if (!empty)
+                            while (filename.contains(".."))
+                                filename = filename.replace("..", "");
+                        if (empty) {
                             res.setContentType("application/json");
                             String jsonResponse = new Gson().toJson(new Response(true, Parameters.DownloadAPI.FILENAME.getParam() + " parameter is empty"));
                             res.getOutputStream().print(jsonResponse);
