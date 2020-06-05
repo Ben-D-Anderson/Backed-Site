@@ -1,5 +1,6 @@
 package backed.site.util;
 
+import backed.site.api.exceptions.NoValidEncryptionKeyException;
 import backed.site.mysql.MySQL;
 
 import javax.crypto.*;
@@ -7,13 +8,16 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.LinkedList;
 import java.util.List;
 
 public class FileHandler {
 
-    public static void encryptAndSaveFile(String username, InputStream inputStream, String inputName) throws Exception {
+    public static void encryptAndSaveFile(String username, InputStream inputStream, String inputName) throws IOException, GeneralSecurityException {
         File output = getOutputFile(username, inputName);
         createFile(output);
 
@@ -35,7 +39,7 @@ public class FileHandler {
         CipherOutputStream cipherOutputStream = new CipherOutputStream(fileOutputStream, cipher);
 
         byte[] buffer = new byte[1024];
-        int length = 0;
+        int length;
         while ((length = inputStream.read(buffer)) >= 0) {
             cipherOutputStream.write(buffer, 0, length);
         }
@@ -52,12 +56,12 @@ public class FileHandler {
         output.createNewFile();
     }
 
-    public static void decryptToOutputStream(String username, String fileName, OutputStream outputStream) throws Exception {
+    public static void decryptToOutputStream(String username, String fileName, OutputStream outputStream) throws IOException, NoValidEncryptionKeyException, GeneralSecurityException {
         File input = getEncryptedFileOfUser(username, fileName);
 
         String key = MySQL.getInstance().getEncryptionKeyFromUsername(username);
         if (key == null || key.isEmpty()) {
-            throw new Exception("No Encryption Key Found For User " + username);
+            throw new NoValidEncryptionKeyException("No Encryption Key Found For User " + username);
         }
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -72,7 +76,7 @@ public class FileHandler {
         CipherInputStream cipherInputStream = new CipherInputStream(fileInputStream, cipher);
 
         byte[] buffer = new byte[1024];
-        int length = 0;
+        int length;
         while ((length = cipherInputStream.read(buffer)) >= 0) {
             outputStream.write(buffer, 0, length);
         }
@@ -83,8 +87,8 @@ public class FileHandler {
     public static List<String> getAllFileNamesOfUser(String username) {
         List<String> fileNames = new LinkedList<>();
         String[] fullFileNames = getOutputDirOfUser(username).list();
-        for (int i = 0; i < fullFileNames.length; i++) {
-            fileNames.add(fullFileNames[i].substring(0, fullFileNames[i].lastIndexOf(".")));
+        for (String fullFileName : fullFileNames) {
+            fileNames.add(fullFileName.substring(0, fullFileName.lastIndexOf(".")));
         }
         return fileNames;
     }
