@@ -15,7 +15,7 @@ public class FileHandler {
 
     public static void encryptAndSaveFile(String username, InputStream inputStream, String inputName) throws Exception {
         File output = getOutputFile(username, inputName);
-        output.createNewFile();
+        createFile(output);
 
         String key = MySQL.getInstance().getEncryptionKeyFromUsername(username);
         if (key == null || key.isEmpty()) {
@@ -44,6 +44,12 @@ public class FileHandler {
         cipherOutputStream.close();
         fileOutputStream.flush();
         fileOutputStream.close();
+    }
+
+    private static void createFile(File output) throws IOException {
+        if (!output.getParentFile().exists())
+            output.getParentFile().mkdirs();
+        output.createNewFile();
     }
 
     public static void decryptToOutputStream(String username, String fileName, OutputStream outputStream) throws Exception {
