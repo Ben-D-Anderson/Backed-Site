@@ -35,12 +35,14 @@ public class DownloadAPIFilter implements Filter {
                 if (cookie.getName().equals("auth_session")) {
                     if(MySQL.getInstance().registeredCookies.contains(cookie.getValue()) && MySQL.getInstance().isCookieValid(cookie.getValue())) {
                         String filename = req.getParameter(Parameters.DownloadAPI.FILENAME.getParam());
-                        if (filename == null || filename.isEmpty()) {
+                        filename = filename.replace("..", "");
+                        if (filename.isEmpty()) {
                             res.setContentType("application/json");
                             String jsonResponse = new Gson().toJson(new Response(true, Parameters.DownloadAPI.FILENAME.getParam() + " parameter is empty"));
                             res.getOutputStream().print(jsonResponse);
                             return;
                         }
+                        req.setAttribute("file_name", filename);
                         req.setAttribute("auth_cookie", cookie.getValue());
                         chain.doFilter(req, res);
                         return;
