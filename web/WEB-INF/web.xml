@@ -150,4 +150,21 @@
         <url-pattern>/api/upload</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>DownloadAPIServlet</servlet-name>
+        <servlet-class>backed.site.api.DownloadAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DownloadAPIServlet</servlet-name>
+        <url-pattern>/api/download</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>DownloadAPIFilter</filter-name>
+        <filter-class>backed.site.api.DownloadAPIFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DownloadAPIFilter</filter-name>
+        <url-pattern>/api/download</url-pattern>
+    </filter-mapping>
+
 </web-app>
