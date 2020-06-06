@@ -184,4 +184,21 @@
         <url-pattern>/api/files</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>DeleteAPIServlet</servlet-name>
+        <servlet-class>backed.site.api.DeleteAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteAPIServlet</servlet-name>
+        <url-pattern>/api/delete</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>DeleteAPIFilter</filter-name>
+        <filter-class>backed.site.api.DeleteAPIFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DeleteAPIFilter</filter-name>
+        <url-pattern>/api/delete</url-pattern>
+    </filter-mapping>
+
 </web-app>
