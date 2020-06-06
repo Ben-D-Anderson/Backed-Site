@@ -34,18 +34,20 @@ public class UploadAPIServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setFileSizeMax(maxFileSize);
 
-        List<FileItem> items = null;
+        List<FileItem> items;
         try {
             items = upload.parseRequest(req);
             for (FileItem item : items) {
                 try {
                     InputStream inputStream = item.getInputStream();
-                    String name = item.getName().replace("..", "");
+                    String name = item.getName();
+                    while (name.contains(".."))
+                        name = name.replace("..", "");
                     FileHandler.encryptAndSaveFile(username, inputStream, name);
-                    JsonElement jsonElement = new Gson().toJsonTree(new Response(false, "file " + name + " successfully uploaded"));
+                    JsonElement jsonElement = new Gson().toJsonTree(new Response(false, "file '" + name + "' successfully uploaded"));
                     jsonArray.add(jsonElement);
                 } catch(Exception e) {
-                    JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to upload file " + e.toString()));
+                    JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to upload file '" + e.toString() + "'"));
                     jsonArray.add(jsonElement);
                 }
             }

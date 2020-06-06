@@ -19,7 +19,7 @@ public class LoginAPIFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         if (!req.getMethod().equals("POST")) {
             res.setContentType("application/json");
-            String jsonResponse = new Gson().toJson(new Response(true, "post method required"));
+            String jsonResponse = new Gson().toJson(new Response(true, "http post method required"));
             res.getOutputStream().print(jsonResponse);
             return;
         }
@@ -44,9 +44,9 @@ public class LoginAPIFilter implements Filter {
         }
         String user = req.getParameter(Parameters.Login.USERNAME.getParam());
         String pass = req.getParameter(Parameters.Login.PASSWORD.getParam());
-        if (user == null | pass == null || user.isEmpty() || pass.isEmpty()) {
+        if (user == null || pass == null || user.isEmpty() || pass.isEmpty()) {
             res.setContentType("application/json");
-            String jsonResponse = new Gson().toJson(new Response(true, "username and password parameters are empty"));
+            String jsonResponse = new Gson().toJson(new Response(true, Parameters.Login.USERNAME.getParam() + " and " + Parameters.Login.PASSWORD.getParam() + " parameters are empty"));
             res.getOutputStream().print(jsonResponse);
             return;
         }

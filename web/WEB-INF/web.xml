@@ -150,4 +150,38 @@
         <url-pattern>/api/upload</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>DownloadAPIServlet</servlet-name>
+        <servlet-class>backed.site.api.DownloadAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DownloadAPIServlet</servlet-name>
+        <url-pattern>/api/download</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>DownloadAPIFilter</filter-name>
+        <filter-class>backed.site.api.DownloadAPIFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DownloadAPIFilter</filter-name>
+        <url-pattern>/api/download</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>FilesAPIServlet</servlet-name>
+        <servlet-class>backed.site.api.FilesAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FilesAPIServlet</servlet-name>
+        <url-pattern>/api/files</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>FilesAPIFilter</filter-name>
+        <filter-class>backed.site.api.FilesAPIFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilesAPIFilter</filter-name>
+        <url-pattern>/api/files</url-pattern>
+    </filter-mapping>
+
 </web-app>
