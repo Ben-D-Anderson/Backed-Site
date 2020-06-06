@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class FilesAPIServlet extends HttpServlet {
 
@@ -29,7 +30,7 @@ public class FilesAPIServlet extends HttpServlet {
 
     private String listRecursively(File dir) {
         StringBuilder tmp = new StringBuilder();
-        for (File file : dir.listFiles()) {
+        for (File file : Objects.requireNonNull(dir.listFiles())) {
             if (!tmp.toString().isEmpty())
                 tmp.append(", ");
             if (file.isDirectory())
