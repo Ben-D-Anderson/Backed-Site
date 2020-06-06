@@ -167,4 +167,21 @@
         <url-pattern>/api/download</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>FilesAPIServlet</servlet-name>
+        <servlet-class>backed.site.api.FilesAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FilesAPIServlet</servlet-name>
+        <url-pattern>/api/files</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>FilesAPIFilter</filter-name>
+        <filter-class>backed.site.api.FilesAPIFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilesAPIFilter</filter-name>
+        <url-pattern>/api/files</url-pattern>
+    </filter-mapping>
+
 </web-app>
