@@ -16,9 +16,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 public class UploadAPIServlet extends HttpServlet {
 
@@ -27,6 +29,8 @@ public class UploadAPIServlet extends HttpServlet {
         String cookie = (String) req.getAttribute("auth_cookie");
         String username = MySQL.getInstance().getUsernameFromCookie(cookie);
         long maxFileSize = Integer.parseInt(Settings.getInstance().getConfig().getMaxFileSizeInKB().toString()) * 1000;
+        long maxStorageSizeOfUser = Integer.parseInt(Settings.getInstance().getConfig().getMaxStorageSizePerUserInKB().toString()) * 1000;
+        long currentStorageSizeOfUser = folderSize(FileHandler.getOutputDirOfUser(username));
 
         JsonArray jsonArray = new JsonArray();
 
@@ -38,6 +42,12 @@ public class UploadAPIServlet extends HttpServlet {
         try {
             items = upload.parseRequest(req);
             for (FileItem item : items) {
+                if (currentStorageSizeOfUser + item.getSize() > maxStorageSizeOfUser) {
+                    res.setContentType("application/json");
+                    String jsonResponse = new Gson().toJson(new Response(true, "failed to upload file (exceeds maximum storage size for user)"));
+                    res.getOutputStream().print(jsonResponse);
+                    return;
+                }
                 try {
                     InputStream inputStream = item.getInputStream();
                     String name = item.getName();
@@ -47,7 +57,7 @@ public class UploadAPIServlet extends HttpServlet {
                     JsonElement jsonElement = new Gson().toJsonTree(new Response(false, "file '" + name + "' successfully uploaded"));
                     jsonArray.add(jsonElement);
                 } catch(Exception e) {
-                    JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to upload file '" + e.toString() + "'"));
+                    JsonElement jsonElement = new Gson().toJsonTree(new Response(true, "failed to upload file (" + e.toString() + ")"));
                     jsonArray.add(jsonElement);
                 }
             }
@@ -58,6 +68,17 @@ public class UploadAPIServlet extends HttpServlet {
 
         res.setContentType("application/json");
         res.getOutputStream().print(jsonArray.toString());
+    }
+
+    private long folderSize(File directory) {
+        long length = 0;
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            if (file.isFile())
+                length += file.length();
+            else
+                length += folderSize(file);
+        }
+        return length;
     }
 
 }
