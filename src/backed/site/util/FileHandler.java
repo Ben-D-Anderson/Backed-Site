@@ -9,11 +9,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.LinkedList;
-import java.util.List;
 
 public class FileHandler {
 
@@ -84,15 +80,6 @@ public class FileHandler {
         fileInputStream.close();
     }
 
-    public static List<String> getAllFileNamesOfUser(String username) {
-        List<String> fileNames = new LinkedList<>();
-        String[] fullFileNames = getOutputDirOfUser(username).list();
-        for (String fullFileName : fullFileNames) {
-            fileNames.add(fullFileName.substring(0, fullFileName.lastIndexOf(".")));
-        }
-        return fileNames;
-    }
-
     private static File getOutputFile(String username, String inputName) {
         String outputName = inputName + ".bak";
         File outputDir = getOutputDirOfUser(username);
@@ -101,7 +88,7 @@ public class FileHandler {
         return outputFile;
     }
 
-    private static File getOutputDirOfUser(String username) {
+    public static File getOutputDirOfUser(String username) {
         String storageLoc = Settings.getInstance().getConfig().getFileStorageLocation().toString().replace("\"", "");
         String storageID = MySQL.getInstance().getStorageIDFromUsername(username);
         if (storageID == null || storageID.isEmpty()) {
