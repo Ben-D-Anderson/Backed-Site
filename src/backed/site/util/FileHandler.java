@@ -80,7 +80,7 @@ public class FileHandler {
         fileInputStream.close();
     }
 
-    private static File getOutputFile(String username, String inputName) {
+    public static File getOutputFile(String username, String inputName) {
         String outputName = inputName + ".bak";
         File outputDir = getOutputDirOfUser(username);
         File outputFile = new File(outputDir.getPath() + File.separator + outputName);
