@@ -81,7 +81,9 @@ public class FileHandler {
     }
 
     public static File getOutputFile(String username, String inputName) {
-        String outputName = inputName + ".bak";
+        String outputName = inputName;
+        if (!outputName.endsWith("\\") && !outputName.endsWith("/"))
+            outputName += ".bak";
         File outputDir = getOutputDirOfUser(username);
         File outputFile = new File(outputDir.getPath() + File.separator + outputName);
         if (outputFile.exists()) outputFile.delete();
