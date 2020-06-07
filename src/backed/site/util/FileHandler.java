@@ -15,6 +15,8 @@ public class FileHandler {
 
     public static void encryptAndSaveFile(String username, InputStream inputStream, String inputName) throws IOException, GeneralSecurityException {
         File output = getOutputFile(username, inputName);
+        if (output.exists())
+            output.delete();
         createFile(output);
 
         String key = MySQL.getInstance().getEncryptionKeyFromUsername(username);
@@ -86,7 +88,6 @@ public class FileHandler {
             outputName += ".bak";
         File outputDir = getOutputDirOfUser(username);
         File outputFile = new File(outputDir.getPath() + File.separator + outputName);
-        if (outputFile.exists()) outputFile.delete();
         return outputFile;
     }
 
