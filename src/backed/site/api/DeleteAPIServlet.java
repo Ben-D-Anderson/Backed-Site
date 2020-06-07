@@ -21,8 +21,8 @@ public class DeleteAPIServlet extends HttpServlet {
         String filename = (String) req.getAttribute("file_name");
 
         File file = FileHandler.getOutputFile(username, filename);
-        boolean exists = file.exists(); // outputs false even if exists
-        boolean deleted = file.delete(); // outputs false even if deleted
+        boolean exists = file.exists();
+        boolean deleted = file.delete();
 
         if (deleted) {
             res.setContentType("application/json");
