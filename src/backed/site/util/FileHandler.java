@@ -54,7 +54,7 @@ public class FileHandler {
         output.createNewFile();
     }
 
-    public static void decryptToOutputStream(String username, String fileName, OutputStream outputStream) throws IOException, NoValidEncryptionKeyException, GeneralSecurityException {
+    public static void decryptToOutputStream(String username, String fileName, OutputStream outputStream) throws FileNotFoundException, IOException, NoValidEncryptionKeyException, GeneralSecurityException {
         File input = getEncryptedFileOfUser(username, fileName);
 
         String key = MySQL.getInstance().getEncryptionKeyFromUsername(username);
