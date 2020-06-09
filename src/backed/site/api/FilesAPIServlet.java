@@ -36,7 +36,7 @@ public class FilesAPIServlet extends HttpServlet {
             if (file.isDirectory())
                 tmp.append("{\"" + file.getName() + "\":[" + listRecursively(file) + "]}");
             else
-                tmp.append("\"" + file.getName() + "\"");
+                tmp.append("\"" + file.getName().replace(".bak", "") + "\"");
         }
         finalJson = "{\"error\":\"false\", \"message\":\"files listed successfully\", \"files\":[" + tmp.toString() + "]}";
         return tmp.toString();
