@@ -38,7 +38,7 @@ public class FilesAPIServlet extends HttpServlet {
             else
                 tmp.append("\"" + file.getName() + "\"");
         }
-        finalJson = "[" + tmp.toString() + "]";
+        finalJson = "{\"error\":\"false\", \"message\":\"files listed successfully\", \"files\":[" + tmp.toString() + "]}";
         return tmp.toString();
     }
 
