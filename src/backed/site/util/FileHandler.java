@@ -33,19 +33,20 @@ public class FileHandler {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
 
-        FileOutputStream fileOutputStream = new FileOutputStream(output);
-        CipherOutputStream cipherOutputStream = new CipherOutputStream(fileOutputStream, cipher);
-
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = inputStream.read(buffer)) >= 0) {
-            cipherOutputStream.write(buffer, 0, length);
+        try (
+            FileOutputStream fileOutputStream = new FileOutputStream(output);
+            CipherOutputStream cipherOutputStream = new CipherOutputStream(fileOutputStream, cipher);
+        ) {
+            byte[] buffer = new byte[1024 * 1024];
+            int length;
+            while ((length = inputStream.read(buffer)) >= 0) {
+                cipherOutputStream.write(buffer, 0, length);
+            }
+            inputStream.close();
+            cipherOutputStream.flush();
+            fileOutputStream.flush();
         }
-        inputStream.close();
-        cipherOutputStream.flush();
-        cipherOutputStream.close();
-        fileOutputStream.flush();
-        fileOutputStream.close();
+
     }
 
     private static void createFile(File output) throws IOException {
@@ -70,16 +71,17 @@ public class FileHandler {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
 
-        FileInputStream fileInputStream = new FileInputStream(input);
-        CipherInputStream cipherInputStream = new CipherInputStream(fileInputStream, cipher);
-
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = cipherInputStream.read(buffer)) >= 0) {
-            outputStream.write(buffer, 0, length);
+        try (
+            FileInputStream fileInputStream = new FileInputStream(input);
+            CipherInputStream cipherInputStream = new CipherInputStream(fileInputStream, cipher);
+        ) {
+            byte[] buffer = new byte[1024 * 1024];
+            int length;
+            while ((length = cipherInputStream.read(buffer)) >= 0) {
+                outputStream.write(buffer, 0, length);
+            }
         }
-        cipherInputStream.close();
-        fileInputStream.close();
+
     }
 
     public static File getOutputFile(String username, String inputName) {
