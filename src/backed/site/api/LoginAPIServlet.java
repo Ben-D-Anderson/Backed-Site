@@ -4,7 +4,6 @@ import backed.site.api.response.LoginResponse;
 import backed.site.api.response.Response;
 import backed.site.enums.Parameters;
 import backed.site.mysql.MySQL;
-import backed.site.mysql.MySQLQueue;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -23,7 +22,7 @@ public class LoginAPIServlet extends HttpServlet {
         if (MySQL.getInstance().checkLogin(user, pass)) {
             Cookie cookie = MySQL.getInstance().generateCookie();
             cookie.setMaxAge(3600);
-            MySQLQueue.getInstance().addToQueue(() -> MySQL.getInstance().setCookie(user, cookie));
+            MySQL.getInstance().setCookie(user, cookie);
             res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new LoginResponse(false, "login successful", cookie));
             res.getOutputStream().print(jsonResponse);
