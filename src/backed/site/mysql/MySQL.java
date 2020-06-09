@@ -35,8 +35,8 @@ public class MySQL {
 				"encryption_keys (enc_key TEXT, username VARCHAR(255))"
 				};
 		for (String table : tables) {
-			try {
-				getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS " + table).execute();
+			try (Connection connection = getConnection()) {
+				connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + table).execute();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -45,29 +45,29 @@ public class MySQL {
 	}
 
 	private void cacheAllUUIDs() {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT id FROM storage_ids");
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				registeredStorageIDs.add(results.getString("id"));
 			}
 
-			statement = getConnection()
+			statement = connection
 					.prepareStatement("SELECT code FROM email_codes");
 			results = statement.executeQuery();
 			while (results.next()) {
 				registeredConfirmationCodes.add(results.getString("code"));
 			}
 
-			statement = getConnection()
+			statement = connection
 					.prepareStatement("SELECT cookie FROM cookies");
 			results = statement.executeQuery();
 			while (results.next()) {
 				registeredCookies.add(results.getString("cookie"));
 			}
 
-			statement = getConnection()
+			statement = connection
 					.prepareStatement("SELECT enc_key FROM encryption_keys");
 			results = statement.executeQuery();
 			while (results.next()) {
@@ -109,8 +109,8 @@ public class MySQL {
 	}
 
 	public String getEncryptionKeyFromUsername(String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT enc_key FROM encryption_keys WHERE username=?");
 			statement.setString(1, username);
 			ResultSet results = statement.executeQuery();
@@ -118,16 +118,15 @@ public class MySQL {
 				return results.getString("enc_key");
 			}
 			return null;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
 	public void setEncryptionKey(String encryptionKey, String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("INSERT INTO encryption_keys (enc_key, username) VALUES (?, ?)");
 			statement.setString(1, encryptionKey);
 			statement.setString(2, username);
@@ -155,8 +154,8 @@ public class MySQL {
 	}
 
 	public String getStorageIDFromUsername(String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT id FROM storage_ids WHERE username=?");
 			statement.setString(1, username);
 			ResultSet results = statement.executeQuery();
@@ -172,8 +171,8 @@ public class MySQL {
 	}
 
 	public void setStorageID(String storageID, String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("INSERT INTO storage_ids (id, username) VALUES (?, ?)");
 			statement.setString(1, storageID);
 			statement.setString(2, username);
@@ -190,8 +189,8 @@ public class MySQL {
 	 */
 
 	private byte[] getSalt(String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT salt FROM users WHERE username=?");
 			statement.setString(1, username);
 			ResultSet results = statement.executeQuery();
@@ -250,8 +249,8 @@ public class MySQL {
 	}
 
 	public String getUsernameFromCookie(String value) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT username FROM cookies WHERE cookie=?");
 			statement.setString(1, value);
 			ResultSet results = statement.executeQuery();
@@ -267,8 +266,8 @@ public class MySQL {
 	}
 
 	public String getCookieFromUsername(String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT cookie FROM cookies WHERE username=?");
 			statement.setString(1, username);
 			ResultSet results = statement.executeQuery();
@@ -285,8 +284,8 @@ public class MySQL {
 
 	public boolean isCookieValid(String value) {
 		long current = Calendar.getInstance().getTimeInMillis();
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT * FROM cookies WHERE cookie=? AND expiry>=?");
 			statement.setString(1, value);
 			statement.setLong(2, current);
@@ -306,16 +305,16 @@ public class MySQL {
 		int age = cookie.getMaxAge();
 		long expiry = Calendar.getInstance().getTimeInMillis() + (age * 1000);
 
-		try {
+		try (Connection connection = getConnection()) {
 			if (getCookieFromUsername(username) != null) {
-				PreparedStatement statement = getConnection().prepareStatement("UPDATE cookies SET cookie=?, expiry=? WHERE username=?");
+				PreparedStatement statement = connection.prepareStatement("UPDATE cookies SET cookie=?, expiry=? WHERE username=?");
 				statement.setString(1, value);
 				statement.setLong(2, expiry);
 				statement.setString(3, username);
 
 				statement.executeUpdate();
 			} else {
-				PreparedStatement statement = getConnection().prepareStatement("INSERT INTO cookies (username, cookie, expiry) VALUES (?, ?, ?)");
+				PreparedStatement statement = connection.prepareStatement("INSERT INTO cookies (username, cookie, expiry) VALUES (?, ?, ?)");
 				statement.setString(1, username);
 				statement.setString(2, value);
 				statement.setLong(3, expiry);
@@ -328,8 +327,8 @@ public class MySQL {
 	}
 
 	public void expireCookie(String value) {
-		try {
-			PreparedStatement statement = getConnection().prepareStatement("DELETE FROM cookies WHERE cookie=?");
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement("DELETE FROM cookies WHERE cookie=?");
 			statement.setString(1, value);
 
 			statement.executeUpdate();
@@ -345,8 +344,8 @@ public class MySQL {
 	 */
 	
 	public String getEmailFromUsername(String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT email FROM users WHERE username=? AND email_confirmed=?");
 			statement.setString(1, username);
 			statement.setBoolean(2, true);
@@ -365,8 +364,8 @@ public class MySQL {
 
 	public boolean checkLogin(String username, String password) {
 		password = getSecurePassword(password, getSalt(username));
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT * FROM users WHERE username=? AND password=? AND email_confirmed=?");
 			statement.setString(1, username);
 			statement.setString(2, password);
@@ -385,8 +384,8 @@ public class MySQL {
 	public void createUser(String username, String email, String password) {
 		byte[] salt = getRandomSalt();
 		password = getSecurePassword(password, salt);
-		try {
-			PreparedStatement statement = getConnection().prepareStatement("INSERT INTO users (username, email, password, salt, email_confirmed) VALUES (?, ?, ?, ?, ?)");
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO users (username, email, password, salt, email_confirmed) VALUES (?, ?, ?, ?, ?)");
 			statement.setString(1, username);
 			statement.setString(2, email);
 			statement.setString(3, password);
@@ -415,8 +414,8 @@ public class MySQL {
 	}
 
 	public String getUsernameFromConfirmationCode(String code) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT username FROM email_codes WHERE code=? AND expiry>=?");
 			statement.setString(1, code);
 			statement.setLong(2, Calendar.getInstance().getTimeInMillis());
@@ -433,8 +432,8 @@ public class MySQL {
 	}
 
 	public String getUnknownValidityConfirmationCodeFromUsername(String username) {
-		try {
-			PreparedStatement statement = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement = connection
 					.prepareStatement("SELECT code FROM email_codes WHERE username=?");
 			statement.setString(1, username);
 			ResultSet results = statement.executeQuery();
@@ -452,16 +451,16 @@ public class MySQL {
 	public void createConfirmationCode(String username, String code) {
 		int age = 3600;
 		long expiry = Calendar.getInstance().getTimeInMillis() + (age * 1000);
-		try {
+		try (Connection connection = getConnection()) {
 			if (getUnknownValidityConfirmationCodeFromUsername(username) != null) {
-				PreparedStatement statement = getConnection().prepareStatement("UPDATE email_codes SET code=?, expiry=? WHERE username=?");
+				PreparedStatement statement = connection.prepareStatement("UPDATE email_codes SET code=?, expiry=? WHERE username=?");
 				statement.setString(1, code);
 				statement.setLong(2, expiry);
 				statement.setString(3, username);
 
 				statement.executeUpdate();
 			} else {
-				PreparedStatement statement = getConnection().prepareStatement("INSERT INTO email_codes (code, username, expiry) VALUES (?, ?, ?)");
+				PreparedStatement statement = connection.prepareStatement("INSERT INTO email_codes (code, username, expiry) VALUES (?, ?, ?)");
 				statement.setString(1, code);
 				statement.setString(2, username);
 				statement.setLong(3, expiry);
@@ -475,15 +474,15 @@ public class MySQL {
 	}
 
 	public void confirmEmail(String code) {
-		try {
-			PreparedStatement statement2 = getConnection()
+		try (Connection connection = getConnection()) {
+			PreparedStatement statement2 = connection
 					.prepareStatement("UPDATE users SET email_confirmed=? WHERE username=?");
 			statement2.setBoolean(1, true);
 			statement2.setString(2, getUsernameFromConfirmationCode(code));
 			
 			statement2.executeUpdate();
 			
-			PreparedStatement statement = getConnection()
+			PreparedStatement statement = connection
 					.prepareStatement("DELETE FROM email_codes WHERE code=?");
 			statement.setString(1, code);
 
