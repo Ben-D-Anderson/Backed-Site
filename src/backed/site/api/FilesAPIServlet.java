@@ -34,9 +34,9 @@ public class FilesAPIServlet extends HttpServlet {
             if (!tmp.toString().isEmpty())
                 tmp.append(", ");
             if (file.isDirectory())
-                tmp.append("{\"" + file.getName() + "\":[" + listRecursively(file) + "]}");
+                tmp.append("{\"type\":\"directory\", \"name\":\"" + file.getName() + "\", \"files\": [" + listRecursively(file) + "]}");
             else
-                tmp.append("\"" + file.getName().replace(".bak", "") + "\"");
+                tmp.append("{\"type\":\"file\", \"name\":\"" + file.getName().replace(".bak", "") + "\"}");
         }
         finalJson = "{\"error\":\"false\", \"message\":\"files listed successfully\", \"files\":[" + tmp.toString() + "]}";
         return tmp.toString();
