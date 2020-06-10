@@ -31,12 +31,13 @@ public class FilesAPIServlet extends HttpServlet {
     private String listRecursively(File dir) {
         StringBuilder tmp = new StringBuilder();
         for (File file : Objects.requireNonNull(dir.listFiles())) {
+            long lastModified = file.lastModified();
             if (!tmp.toString().isEmpty())
                 tmp.append(", ");
             if (file.isDirectory())
-                tmp.append("{\"type\":\"directory\", \"name\":\"" + file.getName() + "\", \"files\": [" + listRecursively(file) + "]}");
+                tmp.append("{\"type\":\"directory\", \"name\":\"" + file.getName() + "\", \"last_modified\": " + lastModified + ", \"files\": [" + listRecursively(file) + "]}");
             else
-                tmp.append("{\"type\":\"file\", \"name\":\"" + file.getName().replace(".bak", "") + "\"}");
+                tmp.append("{\"type\":\"file\", \"name\":\"" + file.getName().replace(".bak", "") + "\", \"last_modified\": " + lastModified + "}");
         }
         finalJson = "{\"error\":\"false\", \"message\":\"files listed successfully\", \"files\":[" + tmp.toString() + "]}";
         return tmp.toString();
