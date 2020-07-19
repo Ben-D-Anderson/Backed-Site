@@ -28,11 +28,11 @@ public class MySQL {
 	
 	public MySQL() {
 		String[] tables = {
-				"cookies (username VARCHAR(255), cookie VARCHAR(255), expiry BIGINT)",
-				"users (username VARCHAR(255), email VARCHAR(255), password VARCHAR(255), salt BLOB, email_confirmed BOOLEAN)",
-				"email_codes (code VARCHAR(255), username VARCHAR(255), expiry BIGINT)",
-				"storage_ids (id VARCHAR(255), username VARCHAR(255))",
-				"encryption_keys (enc_key TEXT, username VARCHAR(255))"
+				"cookies (username VARCHAR(255), cookie VARCHAR(255), expiry BIGINT) CHARACTER SET=utf8mb4",
+				"users (username VARCHAR(255), email VARCHAR(255), password VARCHAR(255), salt BLOB, email_confirmed BOOLEAN) CHARACTER SET=utf8mb4",
+				"email_codes (code VARCHAR(255), username VARCHAR(255), expiry BIGINT) CHARACTER SET=utf8mb4",
+				"storage_ids (id VARCHAR(255), username VARCHAR(255)) CHARACTER SET=utf8mb4",
+				"encryption_keys (enc_key TEXT, username VARCHAR(255)) CHARACTER SET=utf8mb4"
 				};
 		for (String table : tables) {
 			try (Connection connection = getConnection()) {
