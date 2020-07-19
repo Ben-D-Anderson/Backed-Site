@@ -9,6 +9,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
 import java.security.spec.KeySpec;
 
 public class FileHandler {
@@ -82,6 +83,41 @@ public class FileHandler {
             }
         }
 
+    }
+
+    public static String getDecryptedFileHash(String username, String fileName, MessageDigest digest) throws IOException, GeneralSecurityException, NoValidEncryptionKeyException {
+        File input = getEncryptedFileOfUser(username, fileName);
+
+        String key = MySQL.getInstance().getEncryptionKeyFromUsername(username);
+        if (key == null || key.isEmpty()) {
+            throw new NoValidEncryptionKeyException("No Encryption Key Found For User " + username);
+        }
+
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        KeySpec spec = new PBEKeySpec(key.toCharArray(), new StringBuilder(key).reverse().toString().getBytes(), 65536, 256);
+        SecretKey tmp = factory.generateSecret(spec);
+        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
+
+        FileInputStream fileInputStream = new FileInputStream(input);
+        CipherInputStream cipherInputStream = new CipherInputStream(fileInputStream, cipher);
+
+        byte[] byteArray = new byte[1024];
+        int bytesCount = 0;
+        while ((bytesCount = cipherInputStream.read(byteArray)) != -1) {
+            digest.update(byteArray, 0, bytesCount);
+        }
+        cipherInputStream.close();
+
+        byte[] bytes = digest.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte aByte : bytes) {
+            sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+        }
+
+        return sb.toString();
     }
 
     public static File getOutputFile(String username, String inputName) {

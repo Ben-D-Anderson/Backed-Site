@@ -201,4 +201,21 @@
         <url-pattern>/api/delete</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>FileHashAPIServlet</servlet-name>
+        <servlet-class>backed.site.api.FileHashAPIServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileHashAPIServlet</servlet-name>
+        <url-pattern>/api/hash</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>FileHashAPIFilter</filter-name>
+        <filter-class>backed.site.api.FileHashAPIFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FileHashAPIFilter</filter-name>
+        <url-pattern>/api/hash</url-pattern>
+    </filter-mapping>
+
 </web-app>
