@@ -1,0 +1,15 @@
+websiteHost: "http://localhost:8080/"
+maxFileSizeInKB: 1000
+maxStorageSizePerUserInKB: 100000
+fileStorageLocation: "D:\\Downloads\\Backed"
+mysql:
+  username: ""
+  password: ""
+  host: ""
+  database: ""
+  port: 0
+mailing:
+  email: ""
+  password: ""
+  host: ""
+  port: 0
