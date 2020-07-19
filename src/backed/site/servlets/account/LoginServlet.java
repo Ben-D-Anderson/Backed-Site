@@ -24,14 +24,21 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String user = request.getParameter(Parameters.Login.USERNAME.getParam());
 		String pass = request.getParameter(Parameters.Login.PASSWORD.getParam());
-		if (user == null | pass == null || user.isEmpty() || pass.isEmpty()) {
+		String rememberMe = request.getParameter(Parameters.Login.REMEMBER_ME.getParam());
+		if (user == null ||
+				pass == null ||
+				rememberMe == null ||
+				user.isEmpty() ||
+				pass.isEmpty() ||
+				rememberMe.isEmpty()) {
 			request.getRequestDispatcher(Pages.LOGIN.getLoc()).forward(request, response);
 			return;
 		}
 		
 		if (MySQL.getInstance().checkLogin(user, pass)) {
 			Cookie cookie = MySQL.getInstance().generateCookie();
-			cookie.setMaxAge(3600);
+			if (!rememberMe.equalsIgnoreCase("true"))
+				cookie.setMaxAge(3600);
 			response.addCookie(cookie);
 			MySQLQueue.getInstance().addToQueue(() -> MySQL.getInstance().setCookie(user, cookie));
 			response.sendRedirect(getServletContext().getContextPath() + Servlets.INDEX.getUrlPattern());

@@ -19,7 +19,8 @@ public class Parameters {
 
     public enum Login implements baseParamEnum {
         USERNAME("username"),
-        PASSWORD("password");
+        PASSWORD("password"),
+        REMEMBER_ME("remember_me");
 
         private String param;
 
