@@ -28,7 +28,7 @@ public class FileHashAPIServlet extends HttpServlet {
 
         try {
             String hash = FileHandler.getDecryptedFileHash(username, filename, MessageDigest.getInstance("SHA256"));
-            jsonResponse = new Gson().toJson(new Response(false, "hash=" + hash));
+            jsonResponse = new Gson().toJson(new Response(false, hash));
         } catch (FileNotFoundException e) {
             jsonResponse = new Gson().toJson(new Response(true, "file '" + filename + "' doesn't exist"));
         } catch (GeneralSecurityException e) {
