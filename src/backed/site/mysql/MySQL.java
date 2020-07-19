@@ -449,8 +449,8 @@ public class MySQL {
 	}
 
 	public void createConfirmationCode(String username, String code) {
-		int age = 3600;
-		long expiry = Calendar.getInstance().getTimeInMillis() + (age * 1000);
+		int age = 604800; // 1 week
+		long expiry = Calendar.getInstance().getTimeInMillis() + age;
 		try (Connection connection = getConnection()) {
 			if (getUnknownValidityConfirmationCodeFromUsername(username) != null) {
 				PreparedStatement statement = connection.prepareStatement("UPDATE email_codes SET code=?, expiry=? WHERE username=?");
