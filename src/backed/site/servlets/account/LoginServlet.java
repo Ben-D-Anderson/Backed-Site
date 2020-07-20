@@ -27,17 +27,15 @@ public class LoginServlet extends HttpServlet {
 		String rememberMe = request.getParameter(Parameters.Login.REMEMBER_ME.getParam());
 		if (user == null ||
 				pass == null ||
-				rememberMe == null ||
 				user.isEmpty() ||
-				pass.isEmpty() ||
-				rememberMe.isEmpty()) {
+				pass.isEmpty()) {
 			request.getRequestDispatcher(Pages.LOGIN.getLoc()).forward(request, response);
 			return;
 		}
 		
 		if (MySQL.getInstance().checkLogin(user, pass)) {
 			Cookie cookie = MySQL.getInstance().generateCookie();
-			if (!rememberMe.equalsIgnoreCase("true"))
+			if (!(rememberMe != null && rememberMe.equalsIgnoreCase("true")))
 				cookie.setMaxAge(3600);
 			response.addCookie(cookie);
 			MySQLQueue.getInstance().addToQueue(() -> MySQL.getInstance().setCookie(user, cookie));

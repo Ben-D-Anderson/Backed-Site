@@ -19,9 +19,11 @@ public class LoginAPIServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String user = req.getParameter(Parameters.Login.USERNAME.getParam());
         String pass = req.getParameter(Parameters.Login.PASSWORD.getParam());
+        String rememberMe = req.getParameter(Parameters.Login.REMEMBER_ME.getParam());
         if (MySQL.getInstance().checkLogin(user, pass)) {
             Cookie cookie = MySQL.getInstance().generateCookie();
-            cookie.setMaxAge(3600);
+            if (!(rememberMe != null && rememberMe.equalsIgnoreCase("true")))
+                cookie.setMaxAge(3600);
             MySQL.getInstance().setCookie(user, cookie);
             res.setContentType("application/json");
             String jsonResponse = new Gson().toJson(new LoginResponse(false, "login successful", cookie));
