@@ -1,5 +1,5 @@
-<%@ page import="backed.site.enums.Servlets" %>
-<%@ page import="backed.site.enums.Parameters" %>
+<%@ page import="com.terraboxstudios.backed.site.enums.Servlets" %>
+<%@ page import="com.terraboxstudios.backed.site.enums.Parameters" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 		 pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>

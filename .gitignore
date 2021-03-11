@@ -1,5 +1,2 @@
-/out/
 /.idea/
-/WebServer.iml
 /src/main/resources/settings.yaml
-/src/backed/site/Test.java

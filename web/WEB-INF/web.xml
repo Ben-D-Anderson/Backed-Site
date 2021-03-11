@@ -6,12 +6,12 @@
     <display-name>Backed</display-name>
 
     <listener>
-        <listener-class>backed.site.util.QueueManager</listener-class>
+        <listener-class>com.terraboxstudios.backed.site.util.QueueManager</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
-        <servlet-class>backed.site.servlets.IndexServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.servlets.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
@@ -20,7 +20,7 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>backed.site.servlets.account.LoginServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.servlets.account.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -28,7 +28,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>LoginFilter</filter-name>
-        <filter-class>backed.site.filters.account.LoginFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.filters.account.LoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
@@ -37,7 +37,7 @@
 
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>backed.site.servlets.account.RegisterServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.servlets.account.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -45,7 +45,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>RegisterFilter</filter-name>
-        <filter-class>backed.site.filters.account.RegisterFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.filters.account.RegisterFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RegisterFilter</filter-name>
@@ -54,7 +54,7 @@
 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>backed.site.servlets.account.LogoutServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.servlets.account.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -62,7 +62,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>LogoutFilter</filter-name>
-        <filter-class>backed.site.filters.account.LogoutFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.filters.account.LogoutFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LogoutFilter</filter-name>
@@ -71,7 +71,7 @@
 
     <servlet>
         <servlet-name>ConfirmEmailServlet</servlet-name>
-        <servlet-class>backed.site.servlets.email.ConfirmEmailServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.servlets.email.ConfirmEmailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ConfirmEmailServlet</servlet-name>
@@ -79,7 +79,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>ConfirmEmailFilter</filter-name>
-        <filter-class>backed.site.filters.email.ConfirmEmailFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.filters.email.ConfirmEmailFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ConfirmEmailFilter</filter-name>
@@ -88,7 +88,7 @@
 
     <servlet>
         <servlet-name>ErrorServlet</servlet-name>
-        <servlet-class>backed.site.servlets.ErrorServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.servlets.ErrorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
@@ -101,7 +101,7 @@
 
     <servlet>
         <servlet-name>LoginAPIServlet</servlet-name>
-        <servlet-class>backed.site.api.LoginAPIServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.api.LoginAPIServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginAPIServlet</servlet-name>
@@ -109,7 +109,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>LoginAPIFilter</filter-name>
-        <filter-class>backed.site.api.LoginAPIFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.api.LoginAPIFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LoginAPIFilter</filter-name>
@@ -118,7 +118,7 @@
 
     <servlet>
     <servlet-name>LogoutAPIServlet</servlet-name>
-    <servlet-class>backed.site.api.LogoutAPIServlet</servlet-class>
+    <servlet-class>com.terraboxstudios.backed.site.api.LogoutAPIServlet</servlet-class>
 </servlet>
     <servlet-mapping>
         <servlet-name>LogoutAPIServlet</servlet-name>
@@ -126,7 +126,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>LogoutAPIFilter</filter-name>
-        <filter-class>backed.site.api.LogoutAPIFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.api.LogoutAPIFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LogoutAPIFilter</filter-name>
@@ -135,7 +135,7 @@
 
     <servlet>
         <servlet-name>UploadAPIServlet</servlet-name>
-        <servlet-class>backed.site.api.UploadAPIServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.api.UploadAPIServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UploadAPIServlet</servlet-name>
@@ -143,7 +143,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>UploadAPIFilter</filter-name>
-        <filter-class>backed.site.api.UploadAPIFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.api.UploadAPIFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>UploadAPIFilter</filter-name>
@@ -152,7 +152,7 @@
 
     <servlet>
         <servlet-name>DownloadAPIServlet</servlet-name>
-        <servlet-class>backed.site.api.DownloadAPIServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.api.DownloadAPIServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DownloadAPIServlet</servlet-name>
@@ -160,7 +160,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>DownloadAPIFilter</filter-name>
-        <filter-class>backed.site.api.DownloadAPIFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.api.DownloadAPIFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>DownloadAPIFilter</filter-name>
@@ -169,7 +169,7 @@
 
     <servlet>
         <servlet-name>FilesAPIServlet</servlet-name>
-        <servlet-class>backed.site.api.FilesAPIServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.api.FilesAPIServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FilesAPIServlet</servlet-name>
@@ -177,7 +177,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>FilesAPIFilter</filter-name>
-        <filter-class>backed.site.api.FilesAPIFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.api.FilesAPIFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>FilesAPIFilter</filter-name>
@@ -186,7 +186,7 @@
 
     <servlet>
         <servlet-name>DeleteAPIServlet</servlet-name>
-        <servlet-class>backed.site.api.DeleteAPIServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.api.DeleteAPIServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DeleteAPIServlet</servlet-name>
@@ -194,7 +194,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>DeleteAPIFilter</filter-name>
-        <filter-class>backed.site.api.DeleteAPIFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.api.DeleteAPIFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>DeleteAPIFilter</filter-name>
@@ -203,7 +203,7 @@
 
     <servlet>
         <servlet-name>FileHashAPIServlet</servlet-name>
-        <servlet-class>backed.site.api.FileHashAPIServlet</servlet-class>
+        <servlet-class>com.terraboxstudios.backed.site.api.FileHashAPIServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FileHashAPIServlet</servlet-name>
@@ -211,7 +211,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>FileHashAPIFilter</filter-name>
-        <filter-class>backed.site.api.FileHashAPIFilter</filter-class>
+        <filter-class>com.terraboxstudios.backed.site.api.FileHashAPIFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>FileHashAPIFilter</filter-name>
